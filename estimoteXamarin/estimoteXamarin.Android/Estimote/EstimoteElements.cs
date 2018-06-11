@@ -6,10 +6,7 @@ namespace estimoteXamarin.Droid
 {
     public class EstimoteElements
     {
-        private static readonly ObservableCollection<EstimoteZoneEvent> events = new ObservableCollection<EstimoteZoneEvent>();
-        
-        public static IProximityObserver Observer { get; set; }
-        public static IProximityObserverHandler ObservationHandler { get; set; }
+        private static readonly ObservableCollection<EstimoteZoneEvent> events = new ObservableCollection<EstimoteZoneEvent>();        
         public static ObservableCollection<EstimoteZoneEvent> Events => events;
     }
 }

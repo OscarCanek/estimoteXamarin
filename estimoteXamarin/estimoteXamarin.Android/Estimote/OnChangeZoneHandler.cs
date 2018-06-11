@@ -19,11 +19,9 @@ namespace estimoteXamarin.Droid
                 {
                     IProximityAttachment attachment = (IProximityAttachment)item;
 
-                    Log.Debug("app", $"OnChangeZoneHandler");
+                    Log.Debug("app", $"OnChangeZoneHandler: {attachment.DeviceId}");
 
-                    var beaconRead = new ReadBeacon(attachment.DeviceId, attachment.Payload);
-                    Beacon beacon = beaconRead.ToBeacon();
-                    EstimoteElements.Events.Insert(0, new EstimoteZoneEvent(beacon, EstimoteZoneEventTypes.CHANGE));
+                    EstimoteElements.Events.Insert(0, new EstimoteZoneEvent(new Beacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.CHANGE));
                 }
             }
             catch (Exception e)

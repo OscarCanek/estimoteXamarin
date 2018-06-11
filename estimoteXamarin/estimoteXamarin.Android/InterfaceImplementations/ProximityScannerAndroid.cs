@@ -36,7 +36,7 @@ namespace estimoteXamarin.Droid
                 Log.Debug("app", "Location permission denied");
                 return;
             }
-            
+
             this.CreateNotification(castedContext);
             this.CreateObserver(castedContext);
         }
@@ -71,8 +71,7 @@ namespace estimoteXamarin.Droid
             var creds = new EstimoteCloudCredentials("test-xamarin-io8", "f03827075acaaba5b6fbc52436f1d4b6");
 
             Observer = new ProximityObserverBuilder(context, creds)
-                .WithEstimoteSecureMonitoringDisabled()
-                .WithTelemetryReportingDisabled()
+                .WithAnalyticsReportingDisabled()          
                 .WithBalancedPowerMode()
                 .WithScannerInForegroundService(notification)
                 .WithOnErrorAction(new ObservingErrorHandler())
@@ -95,11 +94,40 @@ namespace estimoteXamarin.Droid
                 .WithOnChangeAction(new OnChangeZoneHandler())
                 .WithOnExitAction(new OnExitZoneHandler())
                 .Create();
-
+            
             Observer.AddProximityZone(newZone);
             ProximityZones.Add(newZone);
 
-            Log.Debug("app", "Proximity all ready to go!");
+            Log.Debug("app", $"Proximity all ready to go! - Zone range {range} ");
+        }
+
+        public void AddZones(double[] ranges, string key, string value)
+        {
+            if (Observer == null)
+            {
+                Log.Debug("app", "Observer is not defined yet");
+                return;
+            }
+
+            var zoneBuilder = Observer.ZoneBuilder();
+            OnEnterZoneHandler en = new OnEnterZoneHandler();
+            OnChangeZoneHandler ch = new OnChangeZoneHandler();
+            OnExitZoneHandler ex = new OnExitZoneHandler();
+            bool first = true;
+            foreach (var range in ranges)
+            {
+                ProximityZones.Add(zoneBuilder
+                .ForAttachmentKeyAndValue(first ? "AuparNotificationZone" : key, first ? "Always" : value)
+                .InCustomRange(range)
+                .WithOnEnterAction(en)
+                .WithOnChangeAction(ch)
+                .WithOnExitAction(ex)
+                .Create());
+
+                Log.Debug("app", $"Proximity all ready to go! - Zone range {range} ");
+            }
+
+            Observer.AddProximityZones(ProximityZones);
         }
 
         public void StartObservingZones()

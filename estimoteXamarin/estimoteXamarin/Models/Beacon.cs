@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Text;
+using Xamarin.Forms;
 
 namespace estimoteXamarin.Models
 {
     public class Beacon
     {
-        public Beacon(string name, Color color, IDictionary<string, string> attachments)
+        public Beacon(string deviceId, IDictionary<string, string> attachments)
         {
+            if (!attachments.TryGetValue("AuparBusiness", out string name))
+            {
+                name = "Undefined";
+            }
+
+            Color color = new Color();
+            if (attachments.TryGetValue("Color", out string colorString))
+            {
+                color = Color.FromHex(colorString);
+            }
+            else
+            {
+                color = Color.Default;
+            }
+
             this.Name = name;
             this.Color = color;
             this.Attachments = attachments;

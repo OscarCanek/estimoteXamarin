@@ -11,6 +11,8 @@ namespace estimoteXamarin
 
         void AddZone(double range, string key, string value);
 
+        void AddZones(double[] ranges, string key, string value);
+
         void StartObservingZones();
 
         void StopObservingZones();
