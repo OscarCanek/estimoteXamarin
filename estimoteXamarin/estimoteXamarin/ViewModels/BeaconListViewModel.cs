@@ -76,7 +76,7 @@ namespace estimoteXamarin.ViewModels
                 this.LastReceivedEvent = new EstimoteZoneEvent(this.lastReceivedEvent.Beacon, this.lastReceivedEvent.EventType);
             }
 
-            return pinned.Value ? false : true;
+            return await (pinned.Value ? Task.FromResult(false) : Task.FromResult(true));
         }
 
         private class EventComparer : EqualityComparer<EstimoteZoneEvent>
