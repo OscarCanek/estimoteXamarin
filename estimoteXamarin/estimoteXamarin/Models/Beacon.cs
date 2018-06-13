@@ -27,8 +27,10 @@ namespace estimoteXamarin.Models
             this.Name = name;
             this.Color = color;
             this.Attachments = attachments;
+            this.DeviceId = deviceId;
         }
 
+        public string DeviceId { get; private set; }
         public string Name { get; private set; }
         public IDictionary<string, string> Attachments { get; private set; }
         public Color Color { get; private set; }

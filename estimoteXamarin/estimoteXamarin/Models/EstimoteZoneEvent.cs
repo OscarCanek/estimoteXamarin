@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 
 namespace estimoteXamarin.Models
 {

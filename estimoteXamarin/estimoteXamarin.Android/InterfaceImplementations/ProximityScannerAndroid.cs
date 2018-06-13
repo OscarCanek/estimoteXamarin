@@ -13,6 +13,7 @@ using Xamarin.Forms;
 using Android.Content.PM;
 using Android;
 using Android.Support.V4.Content;
+using estimoteXamarin.ViewModels;
 
 [assembly: Dependency(typeof(ProximityScannerAndroid))]
 
@@ -25,8 +26,10 @@ namespace estimoteXamarin.Droid
 
         public IProximityObserver Observer { get; private set; }
         public IProximityObserverHandler ObservationHandler { get; private set; }
-        public ObservableCollection<EstimoteZoneEvent> Events => EstimoteElements.Events;
         public List<IProximityZone> ProximityZones => proximityZones;
+
+        public ObservableCollection<EstimoteZoneEvent> Events { get; set; }
+        public BeaconListViewModel Model { get; set; }
 
         public void Initialize(object context)
         {
@@ -71,7 +74,7 @@ namespace estimoteXamarin.Droid
             var creds = new EstimoteCloudCredentials("test-xamarin-io8", "f03827075acaaba5b6fbc52436f1d4b6");
 
             Observer = new ProximityObserverBuilder(context, creds)
-                .WithAnalyticsReportingDisabled()          
+                .WithAnalyticsReportingDisabled()
                 .WithBalancedPowerMode()
                 .WithScannerInForegroundService(notification)
                 .WithOnErrorAction(new ObservingErrorHandler())
@@ -90,11 +93,11 @@ namespace estimoteXamarin.Droid
             .ZoneBuilder()
                 .ForAttachmentKeyAndValue(key, value)
                 .InCustomRange(range)
-                .WithOnEnterAction(new OnEnterZoneHandler())
-                .WithOnChangeAction(new OnChangeZoneHandler())
-                .WithOnExitAction(new OnExitZoneHandler())
+                .WithOnEnterAction(new OnEnterZoneHandler(this.Model))
+                .WithOnChangeAction(new OnChangeZoneHandler(this.Model))
+                .WithOnExitAction(new OnExitZoneHandler(this.Model))
                 .Create();
-            
+
             Observer.AddProximityZone(newZone);
             ProximityZones.Add(newZone);
 
@@ -110,9 +113,9 @@ namespace estimoteXamarin.Droid
             }
 
             var zoneBuilder = Observer.ZoneBuilder();
-            OnEnterZoneHandler en = new OnEnterZoneHandler();
-            OnChangeZoneHandler ch = new OnChangeZoneHandler();
-            OnExitZoneHandler ex = new OnExitZoneHandler();
+            OnEnterZoneHandler en = new OnEnterZoneHandler(this.Model);
+            OnChangeZoneHandler ch = new OnChangeZoneHandler(this.Model);
+            OnExitZoneHandler ex = new OnExitZoneHandler(this.Model);
             bool first = true;
             foreach (var range in ranges)
             {

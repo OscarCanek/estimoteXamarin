@@ -1,11 +1,15 @@
 ﻿using estimoteXamarin.Models;
+using estimoteXamarin.ViewModels;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace estimoteXamarin
 {
     public interface IProximityScanner
-    {        
-        ObservableCollection<EstimoteZoneEvent> Events { get; }
+    {
+        ObservableCollection<EstimoteZoneEvent> Events { get; set; }
+
+        BeaconListViewModel Model { get; set; }
 
         void Initialize(object context);
 

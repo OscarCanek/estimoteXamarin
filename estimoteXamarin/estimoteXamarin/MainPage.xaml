@@ -2,13 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:estimoteXamarin"
+             xmlns:local1="clr-namespace:estimoteXamarin.Helpers"
              x:Class="estimoteXamarin.MainPage">
-
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local1:AttachmentsConverter x:Key="attchConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout>
-        <!-- Place new controls here -->
-    	<Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <Label Text="Beacons" FontSize="Large" HorizontalOptions="CenterAndExpand" TextColor="Black" />
+        <ListView x:Name="lstBeacons" ItemsSource="{Binding EstimoteEvents}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="0, 5" Orientation="Horizontal">
+                            <BoxView Color="{Binding Beacon.Color}" />
+                            <StackLayout VerticalOptions="Start" Spacing="0">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                    <Label Text="{Binding Beacon.Name}" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding EventType}" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding Date, StringFormat='Received: {0:HH:mm:ss.fffff}'}"></Label>
+                                </StackLayout>
+                                <ScrollView Orientation="Horizontal">
+                                    <Label Text="{Binding Beacon, Converter={StaticResource attchConverter}}"></Label>
+                                </ScrollView>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Orientation="Horizontal">
+            <Button Command="{Binding Pin}" Text="{Binding ButtonText}" />
+            <Label Text="{Binding Scanning}" FontAttributes="Bold"></Label>
+        </StackLayout>
     </StackLayout>
 
 </ContentPage>
