@@ -4,7 +4,12 @@
              xmlns:local="clr-namespace:estimoteXamarin"
              xmlns:local1="clr-namespace:estimoteXamarin.Helpers"
              x:Class="estimoteXamarin.MainPage">
-    
+    <ContentPage.Padding>        
+        <OnPlatform x:TypeArguments="Thickness" 
+                    Android="20" 
+                    iOS="20,40,20,20" 
+                    WinPhone="20" />
+    </ContentPage.Padding>
     <ContentPage.Resources>
         <ResourceDictionary>
             <local1:AttachmentsConverter x:Key="attchConverter" />
@@ -34,7 +39,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <StackLayout Orientation="Horizontal">
-            <Button Command="{Binding Pin}" Text="{Binding ButtonText}" />
+            <Button Command="{Binding Pin}" Text="{Binding ButtonText}" BackgroundColor="{x:Static local:SharedResources.PinButtonBkColor}" />
             <Label Text="{Binding Scanning}" FontAttributes="Bold"></Label>
         </StackLayout>
     </StackLayout>

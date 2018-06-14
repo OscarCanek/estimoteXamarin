@@ -15,21 +15,10 @@ namespace estimoteXamarin
     {
         public MainPage()
         {
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    this.Padding = new Thickness(20, 40, 20, 20);
-                    break;
-                default:
-                    this.Padding = new Thickness(20);
-                    break;
-            }
-
             var model = new BeaconListViewModel();
             this.BindingContext = model;
 
             var scanner = DependencyService.Get<IProximityScanner>();
-            //scanner.Events = events.EstimoteEvents;
             scanner.Model = model;
 
             InitializeComponent();
