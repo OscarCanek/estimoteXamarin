@@ -23,7 +23,7 @@ namespace estimoteXamarin.Droid
 
             Log.Debug("app", $"OnExitZoneHandler: {attachment.DeviceId}");
 
-            this.model.LastReceivedEvent = new EstimoteZoneEvent(new Beacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.EXIT);
+            this.model.LastReceivedEvent = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.EXIT);
 
             return null;
         }

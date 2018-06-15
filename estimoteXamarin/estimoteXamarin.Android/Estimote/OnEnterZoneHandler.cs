@@ -24,7 +24,7 @@ namespace estimoteXamarin.Droid
 
             Log.Debug("app", $"OnEnterZoneHandler: {attachment.DeviceId}");
 
-            this.model.LastReceivedEvent = new EstimoteZoneEvent(new Beacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.ENTER);
+            this.model.LastReceivedEvent = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.ENTER);
 
             return null;
         }
