@@ -43,11 +43,15 @@ namespace estimoteXamarin.ViewModels
         }
 
         public ReactiveCommand<EstimoteZoneEvent, List<EstimoteZoneEvent>> AddToList { get; protected set; }
+
         public ReactiveCommand<bool, bool> Pin { get; protected set; }
 
         public EstimoteZoneEvent LastReceivedEvent
         {
-            get { return lastReceivedEvent; }
+            get
+            {
+                return lastReceivedEvent;
+            }
             set
             {
                 this.RaiseAndSetIfChanged(ref lastReceivedEvent, value);
