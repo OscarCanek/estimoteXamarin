@@ -38,19 +38,19 @@ namespace estimoteXamarin.ViewModels
             buttonText = Pin.Select(x => x == true ? "Pinned" : "Pin").ToProperty(this, x => x.ButtonText, "Pin");
 
             this.WhenAnyValue(x => x.LastReceivedEvent)
-               .Throttle(TimeSpan.FromMilliseconds(800), RxApp.MainThreadScheduler)
+               .Throttle(TimeSpan.FromMilliseconds(400), RxApp.MainThreadScheduler)
                .Where(x => x != null && !pinned.Value)
                .DistinctUntilChanged(new EventComparer())
                .InvokeCommand(AddToList);
 
             this.WhenAnyValue(x => x.LastReceivedEvent)
-               .Throttle(TimeSpan.FromMilliseconds(800), RxApp.MainThreadScheduler)
+               .Throttle(TimeSpan.FromMilliseconds(400), RxApp.MainThreadScheduler)
                .Where(x => x != null && !pinned.Value)
                .DistinctUntilChanged(new EventComparer())
                .InvokeCommand(ChangeCurrentSector);
 
             this.WhenAnyValue(x => x.LastReceivedEventFromDefaultZone)
-                .Throttle(TimeSpan.FromMilliseconds(2000), RxApp.MainThreadScheduler)
+                .Throttle(TimeSpan.FromMilliseconds(1000), RxApp.MainThreadScheduler)
                 .Where(x => x != null && !pinned.Value)
                 .DistinctUntilChanged(new EventComparer())
                 .InvokeCommand(ChangeCurrentImplementation);

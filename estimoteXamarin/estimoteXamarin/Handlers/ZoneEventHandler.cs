@@ -61,12 +61,15 @@ namespace estimoteXamarin.Handlers
 
                     var scanner = DependencyService.Get<IProximityScanner>();
 
+                    // stop observing proximity zones
+                    scanner.StopObservingZones();
+
                     // dispose and delete custom proximity zones of the estimote proximity observer
                     scanner.ClearProximityZones();
 
                     // add new zones
                     newImplementation.ProximityZones.ForEach(x => scanner.AddCustomZone(x.Distance, Helpers.Settings.CustomProximityZoneKey, Helpers.Settings.CustomProximityZoneValue, x.Sectors.SelectMany(s => s.Beacons).Select(b => b.Id).ToArray()));
-
+                    
                     // start observing the new proximity zones and old ones
                     scanner.StartObservingZones();
 

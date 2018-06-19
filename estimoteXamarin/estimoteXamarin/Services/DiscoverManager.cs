@@ -140,7 +140,7 @@ namespace estimoteXamarin.Services
                         {
                             Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
                             Name = "zone1",
-                            Distance = 0.2,
+                            Distance = 0.5,
                             Sectors = new List<Sector>
                             {
                                 new Sector
@@ -151,7 +151,7 @@ namespace estimoteXamarin.Services
                                     {
                                         new Beacon
                                         {
-                                            Id = "9",
+                                            Id = "360420bd6a13046cbee5e6db2195920c",
                                             Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                                             Major = 9,
                                             Minor = 9
@@ -193,7 +193,7 @@ namespace estimoteXamarin.Services
                         {
                             Id = Guid.Parse("00000000-0000-0000-0000-000000000002"),
                             Name = "zone1",
-                            Distance = 0.2,
+                            Distance = 1,
                             Sectors = new List<Sector>
                             {
                                 new Sector
@@ -204,7 +204,7 @@ namespace estimoteXamarin.Services
                                     {
                                         new Beacon
                                         {
-                                            Id = "13",
+                                            Id = "724c51010637e1b51c40b9224cb8ed33",
                                             Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                                             Major = 13,
                                             Minor = 13
@@ -243,19 +243,138 @@ namespace estimoteXamarin.Services
                             }
                         }
                     }
+                },
+                new Implementation
+                {
+                    Id = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                    ColorHex = "#ff3300",
+                    LogoUrl = "https://www.pinterest.es/pin/268456827762654782/",
+                    ProximityZones = new List<ProximityZone>
+                    {
+                        new ProximityZone
+                        {
+                            Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
+                            Name = "zone1",
+                            Distance = 0.5,
+                            Sectors = new List<Sector>
+                            {
+                                new Sector
+                                {
+                                    Id = Guid.Parse("00000000-0000-0000-0000-000000000009"),
+                                    Name = "sec1",
+                                    Beacons = new List<Beacon>
+                                    {
+                                        new Beacon
+                                        {
+                                            Id = "17",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 17,
+                                            Minor = 17
+                                        },
+                                        new Beacon
+                                        {
+                                            Id = "18",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 18,
+                                            Minor = 18
+                                        }
+                                    }
+                                },
+                                new Sector
+                                {
+                                    Id = Guid.Parse("00000000-0000-0000-0000-000000000010"),
+                                    Name = "sec1",
+                                    Beacons = new List<Beacon>
+                                    {
+                                        new Beacon
+                                        {
+                                            Id = "19",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 19,
+                                            Minor = 19
+                                        },
+                                        new Beacon
+                                        {
+                                            Id = "20",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 20,
+                                            Minor = 20
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        new ProximityZone
+                        {
+                            Id = Guid.Parse("00000000-0000-0000-0000-000000000002"),
+                            Name = "zone1",
+                            Distance = 1,
+                            Sectors = new List<Sector>
+                            {
+                                new Sector
+                                {
+                                    Id = Guid.Parse("00000000-0000-0000-0000-000000000011"),
+                                    Name = "sec1",
+                                    Beacons = new List<Beacon>
+                                    {
+                                        new Beacon
+                                        {
+                                            Id = "21",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 21,
+                                            Minor = 21
+                                        },
+                                        new Beacon
+                                        {
+                                            Id = "22",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 22,
+                                            Minor = 22
+                                        }
+                                    }
+                                },
+                                new Sector
+                                {
+                                    Id = Guid.Parse("00000000-0000-0000-0000-000000000012"),
+                                    Name = "sec1",
+                                    Beacons = new List<Beacon>
+                                    {
+                                        new Beacon
+                                        {
+                                            Id = "23",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 23,
+                                            Minor = 23
+                                        },
+                                        new Beacon
+                                        {
+                                            Id = "16",
+                                            Uuid = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                                            Major = 24,
+                                            Minor = 24
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             };
         }
 
         public Task<Implementation> GetImplementation(Beacon beacon)
         {
-            if(beacon.Id == "6626459410d0d46140e928b6d2d8e014" || beacon.Id == "cfe7c3a1cdfadba8a249f75d6eae0634")
+            if (beacon.Id == "6626459410d0d46140e928b6d2d8e014" || beacon.Id == "cfe7c3a1cdfadba8a249f75d6eae0634")
             {
                 return Task.FromResult(this.implementations.SingleOrDefault(x => x.Id == Guid.Parse("00000000-0000-0000-0000-000000000001")));
             }
-            else
+            else if (beacon.Id == "360420bd6a13046cbee5e6db2195920c" || beacon.Id == "724c51010637e1b51c40b9224cb8ed33")
             {
                 return Task.FromResult(this.implementations.SingleOrDefault(x => x.Id == Guid.Parse("00000000-0000-0000-0000-000000000002")));
+            }
+            else
+            {
+                return Task.FromResult(this.implementations.SingleOrDefault(x => x.Id == Guid.Parse("00000000-0000-0000-0000-000000000003")));
             }
         }
 
@@ -273,7 +392,7 @@ namespace estimoteXamarin.Services
                     }
                 });
             }
-            else if(beacon.Id == "cfe7c3a1cdfadba8a249f75d6eae0634")
+            else if (beacon.Id == "cfe7c3a1cdfadba8a249f75d6eae0634")
             {
                 return Task.FromResult(new List<DiscoverListElement>
                 {

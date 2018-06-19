@@ -9,7 +9,7 @@ namespace estimoteXamarin.Models
     {
         public DetectedBeacon(string deviceId, IDictionary<string, string> attachments)
         {
-            if (!attachments.TryGetValue("AuparBusiness", out string name))
+            if (!attachments.TryGetValue("Name", out string name))
             {
                 name = "Undefined";
             }
