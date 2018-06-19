@@ -8,12 +8,14 @@ using System.Linq;
 
 namespace estimoteXamarin.Droid
 {
-    public class OnExitZoneHandler : Java.Lang.Object, Kotlin.Jvm.Functions.IFunction1
+    public class OnExitDefaultZoneHandler : Java.Lang.Object, Kotlin.Jvm.Functions.IFunction1
     {
         private BeaconListViewModel model;
 
-        public OnExitZoneHandler(BeaconListViewModel model)
+        public OnExitDefaultZoneHandler(BeaconListViewModel model)
         {
+            if (model == null) throw new ArgumentNullException("model", "model is null on OnExitCustomZoneHandler");
+
             this.model = model;
         }
 
@@ -23,7 +25,7 @@ namespace estimoteXamarin.Droid
 
             Log.Debug("app", $"OnExitZoneHandler: {attachment.DeviceId}");
 
-            this.model.LastReceivedEvent = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.EXIT);
+            this.model.LastReceivedEventFromDefaultZone = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.EXIT);
 
             return null;
         }

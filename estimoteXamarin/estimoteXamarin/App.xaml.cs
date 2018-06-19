@@ -1,32 +1,43 @@
+using estimoteXamarin.Models;
+using SQLite;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace estimoteXamarin
 {
-	public partial class App : Application
-	{
-		public App ()
-		{
-			InitializeComponent();
+    public partial class App : Application
+    {
+        protected SQLiteAsyncConnection conn;
 
-			MainPage = new MainPage();
-		}
+        public App(string dbPath)
+        {
+            Helpers.Settings.DbPath = dbPath;
+            conn = new SQLiteAsyncConnection(dbPath);
+            conn.CreateTableAsync<Implementation>();
+            conn.CreateTableAsync<ProximityZone>();
+            conn.CreateTableAsync<Sector>();
+            conn.CreateTableAsync<Beacon>();
 
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
+            InitializeComponent();
 
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+            MainPage = new MainPage();
+        }
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+        protected override void OnStart()
+        {
+            // Handle when your app starts
+        }
+
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
+
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+    }
 }

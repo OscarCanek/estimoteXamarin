@@ -6,15 +6,18 @@ using estimoteXamarin.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using estimoteXamarin.ViewModels;
+using System;
 
 namespace estimoteXamarin.Droid
 {
-    public class OnEnterZoneHandler : Java.Lang.Object, Kotlin.Jvm.Functions.IFunction1
+    public class OnEnterDefaultZoneHandler : Java.Lang.Object, Kotlin.Jvm.Functions.IFunction1
     {
         private BeaconListViewModel model;
 
-        public OnEnterZoneHandler(BeaconListViewModel model)
+        public OnEnterDefaultZoneHandler(BeaconListViewModel model)
         {
+            if (model == null) throw new ArgumentNullException("model", "model is null on OnEnterCustomZoneHandler");
+
             this.model = model;
         }
 
@@ -24,7 +27,7 @@ namespace estimoteXamarin.Droid
 
             Log.Debug("app", $"OnEnterZoneHandler: {attachment.DeviceId}");
 
-            this.model.LastReceivedEvent = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.ENTER);
+            this.model.LastReceivedEventFromDefaultZone = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.ENTER);
 
             return null;
         }

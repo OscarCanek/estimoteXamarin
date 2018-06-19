@@ -13,6 +13,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local1:AttachmentsConverter x:Key="attchConverter" />
+            <local1:ImplementationConverter x:Key="ImpConverter" />
+            <local1:SectorConverter x:Key="SectorConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
@@ -38,9 +40,15 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout Orientation="Horizontal">
-            <Button Command="{Binding Pin}" Text="{Binding ButtonText}" BackgroundColor="{x:Static local:SharedResources.PinButtonBkColor}" />
-            <Label Text="{Binding Scanning}" FontAttributes="Bold"></Label>
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal">
+                <Button Command="{Binding Pin}" Text="{Binding ButtonText}" BackgroundColor="{x:Static local:SharedResources.PinButtonBkColor}" />
+                <Label Text="{Binding Scanning}" FontAttributes="Bold"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding CurrentImplementation, Converter={StaticResource ImpConverter}}" FontAttributes="Bold"></Label>
+                <Label Text="{Binding CurrentSector, Converter={StaticResource SectorConverter}}" FontAttributes="Bold"></Label>
+            </StackLayout>
         </StackLayout>
     </StackLayout>
 

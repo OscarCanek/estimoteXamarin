@@ -53,7 +53,7 @@ namespace estimoteXamarin.Droid
             //
             // read more about it on:
             // https://developer.android.com/guide/components/services.html#Foreground
-            var channelId = "proximity_scanning";
+            var channelId = Helpers.Settings.EstimoteNotificationChannelId;
             if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
                 // Android 8.0 and up require a channel for the notifications
@@ -71,7 +71,7 @@ namespace estimoteXamarin.Droid
 
         private void CreateObserver(Android.Content.Context context)
         {
-            var creds = new EstimoteCloudCredentials("test-xamarin-io8", "f03827075acaaba5b6fbc52436f1d4b6");
+            var creds = new EstimoteCloudCredentials(Helpers.Settings.AppIdEstimote, Helpers.Settings.AppTokenEstimote);
 
             Observer = new ProximityObserverBuilder(context, creds)
                 .WithAnalyticsReportingDisabled()
@@ -81,7 +81,29 @@ namespace estimoteXamarin.Droid
                 .Build();
         }
 
-        public void AddZone(double range, string key, string value)
+        public void AddDefaultZone()
+        {
+            if (Observer == null)
+            {
+                Log.Debug("app", "Observer is not defined yet");
+                return;
+            }
+
+            var newZone = Observer
+            .ZoneBuilder()
+                .ForAttachmentKeyAndValue(Helpers.Settings.DefaultProximityZoneKey, Helpers.Settings.DefaultProximityZoneValue)
+                .InCustomRange(Helpers.Settings.DefaultProximityZoneDistance)
+                .WithOnEnterAction(new OnEnterDefaultZoneHandler(this.Model))
+                .WithOnChangeAction(new OnChangeDefaultZoneHandler(this.Model))
+                .WithOnExitAction(new OnExitDefaultZoneHandler(this.Model))
+                .Create();
+
+            Observer.AddProximityZone(newZone);
+
+            Log.Debug("app", $"Proximity all ready to go! - Default zone range {Helpers.Settings.DefaultProximityZoneDistance} ");
+        }
+
+        public void AddCustomZone(double range, string key, string value, string[] beacons)
         {
             if (Observer == null)
             {
@@ -93,9 +115,9 @@ namespace estimoteXamarin.Droid
             .ZoneBuilder()
                 .ForAttachmentKeyAndValue(key, value)
                 .InCustomRange(range)
-                .WithOnEnterAction(new OnEnterZoneHandler(this.Model))
-                .WithOnChangeAction(new OnChangeZoneHandler(this.Model))
-                .WithOnExitAction(new OnExitZoneHandler(this.Model))
+                .WithOnEnterAction(new OnEnterCustomZoneHandler(this.Model, beacons))
+                .WithOnChangeAction(new OnChangeCustomZoneHandler(this.Model, beacons))
+                .WithOnExitAction(new OnExitCustomZoneHandler(this.Model, beacons))
                 .Create();
 
             Observer.AddProximityZone(newZone);
@@ -113,9 +135,9 @@ namespace estimoteXamarin.Droid
             }
 
             var zoneBuilder = Observer.ZoneBuilder();
-            OnEnterZoneHandler en = new OnEnterZoneHandler(this.Model);
-            OnChangeZoneHandler ch = new OnChangeZoneHandler(this.Model);
-            OnExitZoneHandler ex = new OnExitZoneHandler(this.Model);
+            OnEnterDefaultZoneHandler en = new OnEnterDefaultZoneHandler(this.Model);
+            OnChangeDefaultZoneHandler ch = new OnChangeDefaultZoneHandler(this.Model);
+            OnExitDefaultZoneHandler ex = new OnExitDefaultZoneHandler(this.Model);
             bool first = true;
             foreach (var range in ranges)
             {
@@ -152,6 +174,17 @@ namespace estimoteXamarin.Droid
             {
                 ObservationHandler.Stop();
             }
+        }
+
+        public void ClearProximityZones()
+        {
+            if (this.proximityZones.Count == 0)
+            {
+                return;
+            }
+
+            this.proximityZones.ForEach(x => x.Dispose());
+            this.proximityZones.Clear();
         }
     }
 }

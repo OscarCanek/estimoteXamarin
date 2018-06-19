@@ -1,0 +1,95 @@
+﻿{
+  "implementacion": {
+    "id": "imp1",
+    "color": "#FB6900",
+    "logo": "commercialAgreement/1/image?version=1",
+    "zonas": [
+      {
+        "id": "zone1",
+        "nombre": "imp1_zona1",
+        "distancia": 0.2,
+        "sectores": [
+          {
+            "id": "sec1",
+            "nombre": "sec1",
+            "beacons": [
+              {
+                "id": 1,
+                "uuid": "1",
+                "major": 1,
+                "minor": 1
+              },
+              {
+                "id": 2,
+                "uuid": "1",
+                "major": 1,
+                "minor": 2
+              }
+            ]
+          },
+          {
+            "id": "sec2",
+            "nombre": "sec2",
+            "beacons": [
+              {
+                "id": 3,
+                "uuid": "1",
+                "major": 1,
+                "minor": 3
+              },
+              {
+                "id": 4,
+                "uuid": "1",
+                "major": 1,
+                "minor": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "zone2",
+        "nombre": "imp1_zona2",
+        "distancia": 2,
+        "sectores": [
+          {
+            "id": "sec3",
+            "nombre": "sec3",
+            "beacons": [
+              {
+                "id": 5,
+                "uuid": "1",
+                "major": 1,
+                "minor": 5
+              },
+              {
+                "id": 6,
+                "uuid": "1",
+                "major": 1,
+                "minor": 6
+              }
+            ]
+          },
+          {
+            "id": "sec4",
+            "nombre": "sec4",
+            "beacons": [
+              {
+                "id": 7,
+                "uuid": "1",
+                "major": 1,
+                "minor": 7
+              },
+              {
+                "id": 8,
+                "uuid": "1",
+                "major": 1,
+                "minor": 8
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

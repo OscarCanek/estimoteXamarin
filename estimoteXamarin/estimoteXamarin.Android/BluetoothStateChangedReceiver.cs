@@ -40,7 +40,7 @@ namespace estimoteXamarin.Droid
                         if (scanner.Observer != null)
                         {
                             scanner.Initialize(context);
-                            scanner.AddZone(1, "AuparZone", "InBusiness");
+                            scanner.AddDefaultZone();
                         }
 
                         scanner.StartObservingZones();

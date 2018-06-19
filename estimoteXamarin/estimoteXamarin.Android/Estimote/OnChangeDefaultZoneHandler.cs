@@ -8,12 +8,14 @@ using System.Linq;
 
 namespace estimoteXamarin.Droid
 {
-    public class OnChangeZoneHandler : Java.Lang.Object, Kotlin.Jvm.Functions.IFunction1
+    public class OnChangeDefaultZoneHandler : Java.Lang.Object, Kotlin.Jvm.Functions.IFunction1
     {
         private BeaconListViewModel model;
 
-        public OnChangeZoneHandler(BeaconListViewModel model)
+        public OnChangeDefaultZoneHandler(BeaconListViewModel model)
         {
+            if (model == null) throw new ArgumentNullException("model", "model is null on OnChangeCustomZoneHandler");
+
             this.model = model;
         }
 
@@ -21,15 +23,15 @@ namespace estimoteXamarin.Droid
         {
             try
             {
-                var x = (Java.Util.AbstractCollection)p0;
+                var detectedBeacons = (Java.Util.AbstractCollection)p0;
 
-                foreach (var item in x.ToArray())
+                foreach (var item in detectedBeacons.ToArray())
                 {
                     IProximityAttachment attachment = (IProximityAttachment)item;
 
                     Log.Debug("app", $"OnChangeZoneHandler: {attachment.DeviceId}");
-                                        
-                    this.model.LastReceivedEvent = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.CHANGE);
+
+                    this.model.LastReceivedEventFromDefaultZone = new EstimoteZoneEvent(new DetectedBeacon(attachment.DeviceId, attachment.Payload), EstimoteZoneEventTypes.CHANGE);
                 }
             }
             catch (Exception e)

@@ -30,7 +30,8 @@ namespace estimoteXamarin.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
+            string dbPath = FileAccessHelper.GetLocalFilePath("aupar.db3");
+            LoadApplication(new App(dbPath));
 
             receiver = new BluetoothStateChangedReceiver();
         }
@@ -68,7 +69,7 @@ namespace estimoteXamarin.Droid
 
                 var scanner = DependencyService.Get<IProximityScanner>();
                 scanner.Initialize(this);
-                scanner.AddZone(0.2, "AuparZone", "InBusiness");
+                scanner.AddDefaultZone();
                 //var ranges = new double[] { 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5.1, 5.2, 5.3, 5.4 };
                 //scanner.AddZones(ranges, "uuid:major:minor", "8d1bc21c-4654-9a80-bc69-5c13ea70df3e:36388:57521");
 
@@ -94,7 +95,7 @@ namespace estimoteXamarin.Droid
 
                             var scanner = DependencyService.Get<IProximityScanner>();
                             scanner.Initialize(this);
-                            scanner.AddZone(1, "AuparZone", "InBusiness");
+                            scanner.AddDefaultZone();
                             scanner.StartObservingZones();
                         }
                         else

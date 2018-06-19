@@ -1,38 +1,24 @@
-﻿using System;
+﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Xamarin.Forms;
 
 namespace estimoteXamarin.Models
 {
+    [Table("beacon")]
     public class Beacon
     {
-        public Beacon(string deviceId, IDictionary<string, string> attachments)
-        {
-            if (!attachments.TryGetValue("AuparBusiness", out string name))
-            {
-                name = "Undefined";
-            }
+        [PrimaryKey]
+        public string Id { get; set; }
+        public Guid Uuid { get; set; }
+        public int Major { get; set; }
+        public int Minor { get; set; }
 
-            Color color = new Color();
-            if (attachments.TryGetValue("Color", out string colorString))
-            {
-                color = Color.FromHex(colorString);
-            }
-            else
-            {
-                color = Color.Default;
-            }
+        [ForeignKey(typeof(Sector))]
+        public Guid SectorId { get; set; }
 
-            this.Name = name;
-            this.Color = color;
-            this.Attachments = attachments;
-            this.DeviceId = deviceId;
-        }
-
-        public string DeviceId { get; private set; }
-        public string Name { get; private set; }
-        public IDictionary<string, string> Attachments { get; private set; }
-        public Color Color { get; private set; }
+        [ManyToOne]
+        public Sector Sector { get; set; }
     }
 }
